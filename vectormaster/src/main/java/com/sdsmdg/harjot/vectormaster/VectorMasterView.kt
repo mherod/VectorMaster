@@ -211,10 +211,10 @@ class VectorMasterView : View, IVectorMasterView {
                             } else {
                                 groupModelStack.peek().addPathModel(pathModel)
                             }
-                            vectorModel!!.fullpath!!.addPath(pathModel.path)
+                            vectorModel?.fullpath.addPath(pathModel.path)
                         }
                         "clip-path" -> if (groupModelStack.size == 0) {
-                            vectorModel!!.addClipPathModel(clipPathModel)
+                            vectorModel?.addClipPathModel(clipPathModel)
                         } else {
                             groupModelStack.peek().addClipPathModel(clipPathModel)
                         }
@@ -223,7 +223,7 @@ class VectorMasterView : View, IVectorMasterView {
                             when {
                                 groupModelStack.size == 0 -> {
                                     topGroupModel.parent = null
-                                    vectorModel!!.addGroupModel(topGroupModel)
+                                    vectorModel?.addGroupModel(topGroupModel)
                                 }
                                 else -> {
                                     topGroupModel.parent = groupModelStack.peek()

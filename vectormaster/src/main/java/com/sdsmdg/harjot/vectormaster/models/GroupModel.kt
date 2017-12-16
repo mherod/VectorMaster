@@ -9,6 +9,7 @@ import com.sdsmdg.harjot.vectormaster.DefaultValues
 import java.util.ArrayList
 
 class GroupModel {
+
     var name: String? = null
 
     private var rotation: Float = 0.toFloat()
@@ -85,45 +86,33 @@ class GroupModel {
 
     fun scaleAllPaths(scaleMatrix: Matrix) {
         this.scaleMatrix = scaleMatrix
-        finalTransformMatrix = Matrix(originalTransformMatrix)
-        finalTransformMatrix!!.postConcat(scaleMatrix)
-        for (groupModel in groupModels) {
-            groupModel.scaleAllPaths(scaleMatrix)
+
+        finalTransformMatrix = Matrix(originalTransformMatrix).apply {
+            postConcat(scaleMatrix)
         }
-        for (pathModel in pathModels) {
-            pathModel.transform(finalTransformMatrix!!)
-        }
-        for (clipPathModel in clipPathModels) {
-            clipPathModel.transform(finalTransformMatrix!!)
-        }
+
+        groupModels.forEach { it.scaleAllPaths(scaleMatrix) }
+
+        pathModels.forEach { it.transform(finalTransformMatrix!!) }
+
+        clipPathModels.forEach { it.transform(finalTransformMatrix!!) }
     }
 
     fun scaleAllStrokeWidth(ratio: Float) {
-        for (groupModel in groupModels) {
-            groupModel.scaleAllStrokeWidth(ratio)
-        }
-        for (pathModel in pathModels) {
-            pathModel.setStrokeRatio(ratio)
-        }
+        groupModels.forEach { it.scaleAllStrokeWidth(ratio) }
+        pathModels.forEach { it.setStrokeRatio(ratio) }
     }
 
     fun buildTransformMatrix() {
 
-        originalTransformMatrix = Matrix()
-
-        originalTransformMatrix!!.run {
+        originalTransformMatrix = Matrix().apply {
             postScale(scaleX, scaleY, pivotX, pivotY)
             postRotate(rotation, pivotX, pivotY)
             postTranslate(translateX, translateY)
+            parent?.let { postConcat(it.originalTransformMatrix) }
         }
 
-        parent?.let {
-            originalTransformMatrix!!.postConcat(it.originalTransformMatrix)
-        }
-
-        for (groupModel in groupModels) {
-            groupModel.buildTransformMatrix()
-        }
+        groupModels.forEach { it.buildTransformMatrix() }
     }
 
     private fun updateAndScalePaths() {

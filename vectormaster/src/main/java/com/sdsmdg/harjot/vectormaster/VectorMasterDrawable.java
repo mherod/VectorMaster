@@ -10,7 +10,9 @@ import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
 import com.sdsmdg.harjot.vectormaster.models.ClipPathModel;
 import com.sdsmdg.harjot.vectormaster.models.GroupModel;
@@ -22,6 +24,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Stack;
 
 public class VectorMasterDrawable extends Drawable {
@@ -383,7 +386,7 @@ public class VectorMasterDrawable extends Drawable {
     public GroupModel getGroupModelByName(String name) {
         GroupModel gModel;
         for (GroupModel groupModel : vectorModel.getGroupModels()) {
-            if (groupModel.getName().equals(name)) {
+            if (Objects.equals(groupModel.getName(), name)) {
                 return groupModel;
             } else {
                 gModel = groupModel.getGroupModelByName(name);
@@ -394,31 +397,33 @@ public class VectorMasterDrawable extends Drawable {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public PathModel getPathModelByName(String name) {
         PathModel pModel = null;
         for (PathModel pathModel : vectorModel.getPathModels()) {
-            if (pathModel.getName().equals(name)) {
+            if (Objects.equals(pathModel.getName(), name)) {
                 return pathModel;
             }
         }
         for (GroupModel groupModel : vectorModel.getGroupModels()) {
             pModel = groupModel.getPathModelByName(name);
-            if (pModel != null && pModel.getName().equals(name))
+            if (pModel != null && Objects.equals(pModel.getName(), name))
                 return pModel;
         }
         return pModel;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public ClipPathModel getClipPathModelByName(String name) {
         ClipPathModel cModel = null;
         for (ClipPathModel clipPathModel : vectorModel.getClipPathModels()) {
-            if (clipPathModel.getName().equals(name)) {
+            if (Objects.equals(clipPathModel.getName(), name)) {
                 return clipPathModel;
             }
         }
         for (GroupModel groupModel : vectorModel.getGroupModels()) {
             cModel = groupModel.getClipPathModelByName(name);
-            if (cModel != null && cModel.getName().equals(name))
+            if (cModel != null && Objects.equals(cModel.getName(), name))
                 return cModel;
         }
         return cModel;

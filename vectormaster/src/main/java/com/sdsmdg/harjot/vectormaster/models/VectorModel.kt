@@ -30,13 +30,9 @@ class VectorModel {
     val pathModels: ArrayList<PathModel> = ArrayList()
     val clipPathModels: ArrayList<ClipPathModel> = ArrayList()
 
-    var fullpath: Path? = null
+    val fullpath: Path = Path()
 
     private var scaleMatrix: Matrix? = null
-
-    init {
-        fullpath = Path()
-    }
 
     fun drawPaths(canvas: Canvas, offsetX: Float, offsetY: Float, scaleX: Float, scaleY: Float) {
         for (clipPathModel in clipPathModels) {
@@ -87,18 +83,12 @@ class VectorModel {
     }
 
     fun scaleAllStrokeWidth(ratio: Float) {
-        for (groupModel in groupModels) {
-            groupModel.scaleAllStrokeWidth(ratio)
-        }
-        for (pathModel in pathModels) {
-            pathModel.strokeRatio = ratio
-        }
+        groupModels.forEach { it.scaleAllStrokeWidth(ratio) }
+        pathModels.forEach { it.strokeRatio = ratio }
     }
 
     fun buildTransformMatrices() {
-        for (groupModel in groupModels) {
-            groupModel.buildTransformMatrix()
-        }
+        groupModels.forEach(GroupModel::buildTransformMatrix)
     }
 
     fun addGroupModel(groupModel: GroupModel) {
