@@ -4,11 +4,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.sdsmdg.harjot.vectormaster.VectorMasterView;
-import com.sdsmdg.harjot.vectormaster.models.ClipPathModel;
 import com.sdsmdg.harjot.vectormaster.models.GroupModel;
 import com.sdsmdg.harjot.vectormaster.models.PathModel;
 
@@ -75,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void animateLightning() {
-        PathModel cloudModel = lightningView.getPathModelByName("cloud");
+        PathModel cloudModel = lightningView.findPathModelByName("cloud");
         cloudModel.setStrokeColor(Color.parseColor("#5D5D5D"));
-        final PathModel lightningModel = lightningView.getPathModelByName("lightning");
+        final PathModel lightningModel = lightningView.findPathModelByName("lightning");
         lightningModel.setStrokeColor(Color.parseColor("#FFD700"));
         lightningModel.setTrimPathEnd(0.0f);
         lightningModel.setTrimPathStart(0.0f);
@@ -165,10 +163,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void animateSearchBack() {
-        final PathModel searchCircle = searchBackView.getPathModelByName("search_circle");
-        final PathModel stem = searchBackView.getPathModelByName("stem");
-        final PathModel arrowUp = searchBackView.getPathModelByName("arrow_head_top");
-        final PathModel arrowDown = searchBackView.getPathModelByName("arrow_head_bottom");
+        final PathModel searchCircle = searchBackView.findPathModelByName("search_circle");
+        final PathModel stem = searchBackView.findPathModelByName("stem");
+        final PathModel arrowUp = searchBackView.findPathModelByName("arrow_head_top");
+        final PathModel arrowDown = searchBackView.findPathModelByName("arrow_head_bottom");
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -217,9 +215,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void animateRain() {
-        final PathModel rainLeft = rainView.getPathModelByName("rain_left");
-        final PathModel rainCenter = rainView.getPathModelByName("rain_center");
-        final PathModel rainRight = rainView.getPathModelByName("rain_right");
+        final PathModel rainLeft = rainView.findPathModelByName("rain_left");
+        final PathModel rainCenter = rainView.findPathModelByName("rain_center");
+        final PathModel rainRight = rainView.findPathModelByName("rain_right");
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {

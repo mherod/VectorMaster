@@ -1,10 +1,10 @@
-package com.sdsmdg.harjot.vectormaster.enums;
+package com.sdsmdg.harjot.vectormaster.enums
 
 /**
  * Created by Harjot on 20-Jun-17.
  */
 
-public enum TintMode {
+enum class TintMode {
     ADD,
     MULTIPLY,
     SCREEN,
